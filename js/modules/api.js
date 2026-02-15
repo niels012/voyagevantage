@@ -1,10 +1,6 @@
 // js/modules/api.js
 
 
-export const API_KEYS = {
-    NEWS_API: 'd8f326fc4de5447c9b838a950c89067d',
-
-};
 
 export const BASE_URLS = {
     COUNTRIES: 'https://restcountries.com/v3.1/name',
@@ -56,9 +52,8 @@ export async function getCountryData(query) {
 
 // 2. Get News Data
 export async function getNewsData(searchTerm, countryName) {
-    const query = `${searchTerm} ${countryName}`;
-    const url = `${BASE_URLS.NEWS}?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&apiKey=${API_KEYS.NEWS_API}&pageSize=5`;
-    
+    const apiKey = '8c8c1ea7308496fe30e34c7179dd2824';
+    const url = `https://gnews.io/api/v4/search?q=${searchTerm} ${countryName}&lang=en&max=5&apikey=${apiKey}`;
     return await fetchData(url);
 }
 
