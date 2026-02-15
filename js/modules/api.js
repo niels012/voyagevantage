@@ -55,9 +55,10 @@ export async function getCountryData(query) {
 }
 
 // 2. Get News Data
-export async function getNewsData(countryCode) {
-    // 'q' can be the country name or we can use 'language=en'
-    const url = `${BASE_URLS.NEWS}?q=${countryCode}&sortBy=publishedAt&apiKey=${API_KEYS.NEWS_API}&pageSize=5`;
+export async function getNewsData(searchTerm, countryName) {
+    const query = `${searchTerm} ${countryName}`;
+    const url = `${BASE_URLS.NEWS}?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&apiKey=${API_KEYS.NEWS_API}&pageSize=5`;
+    
     return await fetchData(url);
 }
 

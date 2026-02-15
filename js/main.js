@@ -36,7 +36,7 @@ async function handleSearch(query) {
 
         // 2. Fetch News & Currency in parallel
         const [newsData, currencyData] = await Promise.all([
-            getNewsData(countryName), // Search news by country name
+            getNewsData(query, countryName), // CHANGED: Pass 'query' first!
             getCurrencyData()
         ]);
 
@@ -55,6 +55,14 @@ async function handleSearch(query) {
 }
 
 // Render Recent Searches from LocalStorage
+
+function toSentenceCase(str) {
+    if (!str) return '';
+    return str.toLowerCase().split(' ').map(word => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+}
+
 function renderRecentSearches() {
     const searches = getSearches();
     if (searches.length > 0) {
@@ -65,9 +73,15 @@ function renderRecentSearches() {
         searches.forEach(term => {
             const clone = template.content.cloneNode(true);
             const btn = clone.querySelector('button');
-            btn.textContent = term;
+            
+            // CHANGED: Apply the formatting here
+            btn.textContent = toSentenceCase(term);
+            
             btn.onclick = () => {
-                searchInput.value = term;
+                // We keep the original term for the search logic, 
+                // but update the input to look nice too.
+                const prettyTerm = toSentenceCase(term);
+                searchInput.value = prettyTerm;
                 handleSearch(term);
             };
             recentList.appendChild(clone);
