@@ -18,29 +18,43 @@ searchForm.addEventListener('submit', async (e) => {
 });
 
 // Main Search Logic
+// js/main.js
+
 async function handleSearch(query) {
     showLoading();
     try {
-        // 1. Fetch Country Data
-        // Note: The RestCountries API is best searched by 'Country Name'. 
-        // If the user types 'Paris', this API might fail. 
-        // For this demo, we assume the user types a Country (e.g., 'France') or we rely on partial matching.
+        // 1. Fetch Country Data (CRITICAL - If this fails, stop everything)
         const countryData = await getCountryData(query);
         
         if (!countryData || countryData.status === 404) {
             throw new Error('Destination not found. Please try a country name.');
         }
 
-        const countryCode = countryData[0].cca2; // e.g., 'JP' for Japan
+        const countryCode = countryData[0].cca2; 
         const countryName = countryData[0].name.common;
 
-        // 2. Fetch News & Currency in parallel
-        const [newsData, currencyData] = await Promise.all([
-            getNewsData(query, countryName), // CHANGED: Pass 'query' first!
-            getCurrencyData()
-        ]);
+        // 2. Fetch Other Data (NON-CRITICAL - If these fail, keep going)
+        // We initialize them as null so we can check later
+        let newsData = { articles: [] }; 
+        let currencyData = null;
 
-        // 3. Render UI
+        // Try Fetching News
+        try {
+            // Pass query AND countryName
+            newsData = await getNewsData(query, countryName);
+        } catch (error) {
+            console.warn("News API failed (likely CORS or Plan restriction):", error);
+            // We do NOT throw the error here, so the app keeps running!
+        }
+
+        // Try Fetching Currency
+        try {
+            currencyData = await getCurrencyData();
+        } catch (error) {
+            console.warn("Currency API failed:", error);
+        }
+
+        // 3. Render UI with whatever data we successfully got
         renderDashboard(countryData, newsData, currencyData);
 
         // 4. Save to History
@@ -48,6 +62,7 @@ async function handleSearch(query) {
         renderRecentSearches();
 
     } catch (error) {
+        // Only critical errors (like Country not found) end up here
         showError(error.message);
     } finally {
         hideLoading();

@@ -60,22 +60,30 @@ export function renderDashboard(countryData, newsData, currencyData) {
     // Generate the static map URL
     elements.mapContainer.innerHTML = getMapHTML(lat, lng);
  
-    // --- 3. Render Budget ---
-    // Get currency code (e.g., "JPY")
-    const currencyCode = Object.keys(country.currencies)[0];
-    
-    if (currencyData && currencyData.rates && currencyData.rates[currencyCode]) {
-        currentRate = currencyData.rates[currencyCode];
-        elements.rate.textContent = currentRate.toFixed(2);
-        elements.code.textContent = currencyCode;
-        updateConversion(); // Initial calculation
+ // --- 3. Render Budget ---
+    // Check if currencyData exists before trying to read it
+    if (currencyData && currencyData.rates) {
+        const currencyCode = Object.keys(country.currencies)[0];
+        if (currencyData.rates[currencyCode]) {
+            currentRate = currencyData.rates[currencyCode];
+            elements.rate.textContent = currentRate.toFixed(2);
+            elements.code.textContent = currencyCode;
+            updateConversion(); 
+        } else {
+            elements.rate.textContent = "N/A";
+            elements.code.textContent = currencyCode;
+        }
     } else {
+        // Fallback if API failed
         elements.rate.textContent = "Unavailable";
+        elements.code.textContent = "-";
     }
 
     // --- 4. Render News ---
     elements.newsList.innerHTML = '';
-    if (newsData.articles && newsData.articles.length > 0) {
+    
+    // Check if we actually have articles
+    if (newsData && newsData.articles && newsData.articles.length > 0) {
         newsData.articles.forEach(article => {
             const li = document.createElement('li');
             li.innerHTML = `
@@ -85,7 +93,12 @@ export function renderDashboard(countryData, newsData, currencyData) {
             elements.newsList.appendChild(li);
         });
     } else {
-        elements.newsList.innerHTML = '<li>No recent news found.</li>';
+        // Friendly Fallback Message
+        const li = document.createElement('li');
+        li.textContent = "News feed unavailable due to API browser restrictions (CORS).";
+        li.style.color = "#666";
+        li.style.fontStyle = "italic";
+        elements.newsList.appendChild(li);
     }
 }
 
