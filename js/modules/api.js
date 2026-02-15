@@ -2,9 +2,8 @@
 
 
 export const API_KEYS = {
-    NEWS_API: 'YOUR_NEWS_API_KEY_HERE',
-    // ADD: Get this from account.mapbox.com
-    MAPBOX_TOKEN: 'YOUR_MAPBOX_ACCESS_TOKEN_HERE' 
+    NEWS_API: 'd8f326fc4de5447c9b838a950c89067d',
+
 };
 
 export const BASE_URLS = {

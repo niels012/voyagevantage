@@ -126,13 +126,19 @@ main {
 }
 
 
-#map-img {
+
+#map-container {
     width: 100%;
     height: 300px;
-    object-fit: cover; /* Ensures the map fills the area without stretching */
     border-radius: 4px;
-    background-color: #e5e7eb; /* Grey background while loading */
-    display: block;
+    overflow: hidden; /* Ensures corners stay rounded */
+    background-color: #e5e7eb;
+}
+
+#map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
 /* Optional: Add a loading pulse effect */

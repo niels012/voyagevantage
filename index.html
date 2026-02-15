@@ -82,34 +82,32 @@
                 </div>
             </section>
 
-            <section class="card map-section" id="map-card">
-                <div class="card-header">
-                    <h2>Map</h2>
-                    <span class="icon">📍</span>
+        <section class="card map-section" id="map-card">
+            <div class="card-header">
+                <h2>Map</h2>
+                <span class="icon">📍</span>
+            </div>
+            <div class="card-content">
+                <div id="map-container" class="map-placeholder"></div>
+            </div>
+        </section>
+        <section class="card budget" id="budget-card">
+            <div class="card-header">
+                <h2>Budget</h2>
+                <span class="icon">💳</span>
+            </div>
+            <div class="card-content">
+                <div class="exchange-rate-box">
+                    <h4>Exchange Rate</h4>
+                    <p class="rate-display">1 USD = <span id="exchange-rate">--</span> <span id="currency-code">--</span></p>
                 </div>
-                <div class="card-content">
-                    <img id="map-img" src="" alt="Map of destination" class="map-placeholder">
+                <div class="converter">
+                    <label for="amount">Convert USD:</label>
+                    <input type="number" id="amount" value="100" min="1"> 
+                    <p class="result"> = <span id="conversion-result">--</span></p>
                 </div>
-            </section>
-
-            <section class="card budget" id="budget-card">
-                <div class="card-header">
-                    <h2>Budget</h2>
-                    <span class="icon">💳</span>
-                </div>
-                <div class="card-content">
-                    <div class="exchange-rate-box">
-                        <h4>Exchange Rate</h4>
-                        <p class="rate-display">1 USD = <span id="exchange-rate">--</span> <span id="currency-code">--</span></p>
-                    </div>
-                    <div class="converter">
-                        <label for="amount">Convert USD:</label>
-                        <input type="number" id="amount" value="100" min="1">
-                        <p class="result"> = <span id="conversion-result">--</span></p>
-                    </div>
-                </div>
-            </section>
-
+            </div>
+        </section>
         </div>
     </main>
 

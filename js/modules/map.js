@@ -1,19 +1,34 @@
 // js/modules/map.js
-import { API_KEYS, BASE_URLS } from './api.js';
 
 /**
- * Generates a static map image URL from Mapbox.
+ * Generates an OpenStreetMap Iframe for the given location.
  * @param {number} lat - Latitude
  * @param {number} lng - Longitude
- * @returns {string} - The URL for the static map image.
+ * @returns {string} - HTML string for the iframe
  */
-export function getStaticMapURL(lat, lng) {
-    const zoom = 5;      // Zoom level (0-22)
-    const width = 600;   // Image width in px
-    const height = 300;  // Image height in px
-    const bearing = 0;   // Rotation
-    const pitch = 0;     // Tilt
+export function getMapHTML(lat, lng) {
+    // We need to create a "Bounding Box" (bbox) for the map view.
+    // This determines how much area is shown around the center point.
+    const offset = 0.5; // Larger number = Zoomed Out, Smaller = Zoomed In
+    const bbox = [
+        lng - offset, // Left (West)
+        lat - offset, // Bottom (South)
+        lng + offset, // Right (East)
+        lat + offset  // Top (North)
+    ].join(',');
 
-    // Mapbox expects coordinates as: longitude,latitude
-    return `${BASE_URLS.MAPBOX}/${lng},${lat},${zoom},${bearing},${pitch}/${width}x${height}?access_token=${API_KEYS.MAPBOX_TOKEN}`;
+    return `
+        <iframe 
+            width="100%" 
+            height="300" 
+            src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}" 
+            style="border: 1px solid black">
+        </iframe>
+        <br/>
+        <small>
+            <a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=10/${lat}/${lng}" target="_blank">
+                View Larger Map
+            </a>
+        </small>
+    `;
 }

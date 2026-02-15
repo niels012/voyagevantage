@@ -1,12 +1,12 @@
 // js/modules/ui.js
-import { getStaticMapURL } from './map.js';
+import { getMapHTML } from './map.js';
 
 // Selectors
 const elements = {
     dashboard: document.getElementById('dashboard'),
     loading: document.getElementById('loading'),
     error: document.getElementById('error-message'),
-    mapImg: document.getElementById('map-img'),
+    mapContainer: document.getElementById('map-container'),
     // Context
     countryName: document.getElementById('country-name'),
     flag: document.getElementById('flag-container'),
@@ -58,11 +58,8 @@ export function renderDashboard(countryData, newsData, currencyData) {
     // --- 2. Render Map ---
     const [lat, lng] = country.latlng;
     // Generate the static map URL
-    const mapUrl = getStaticMapURL(lat, lng);
-    
-    // Set the image source
-    elements.mapImg.src = mapUrl;
-    elements.mapImg.alt = `Map of ${country.name.common}`;
+    elements.mapContainer.innerHTML = getMapHTML(lat, lng);
+ 
     // --- 3. Render Budget ---
     // Get currency code (e.g., "JPY")
     const currencyCode = Object.keys(country.currencies)[0];
