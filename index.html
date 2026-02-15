@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoyageVantage | Destination Dashboard</title>
+    <meta name="description" content="A 360° travel intelligence dashboard providing context, risk, map, and budget data for international destinations.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+      
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script type="module" src="js/main.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <span class="logo-icon">🧭</span>
+            <h1>VoyageVantage</h1>
+        </div>
+        <div class="search-container">
+            <form id="search-form">
+                <input type="text" id="search-input" placeholder="Enter city (e.g., Tokyo)" required aria-label="Search destination">
+                <button type="submit" aria-label="Search">Search</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <section id="recent-searches" class="hidden">
+            <h3>Recent Searches</h3>
+            <div id="recent-list"></div>
+        </section>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Gathering Intelligence...</p>
+        </div>
+
+        <div id="error-message" class="hidden"></div>
+
+        <div id="dashboard" class="dashboard-grid hidden">
+            
+            <section class="card context" id="context-card">
+                <div class="card-header">
+                    <h2>Context</h2>
+                    <span class="icon">🌐</span>
+                </div>
+                <div class="card-content">
+                    <div id="flag-container"></div>
+                    <h3 id="country-name">--</h3>
+                    <div class="data-row">
+                        <span>Capital:</span> <span id="capital">--</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Population:</span> <span id="population">--</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Language:</span> <span id="language">--</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Timezone:</span> <span id="timezone">--</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card risk" id="risk-card">
+                <div class="card-header">
+                    <h2>Risk Intel</h2>
+                    <span class="icon">⚠️</span>
+                </div>
+                <div class="card-content">
+                    <div class="safety-snapshot">
+                        <h4>Latest News Headlines</h4>
+                        <ul id="news-list">
+                            <li>Awaiting search...</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card map-section" id="map-card">
+                <div class="card-header">
+                    <h2>Map</h2>
+                    <span class="icon">📍</span>
+                </div>
+                <div class="card-content">
+                    <img id="map-img" src="" alt="Map of destination" class="map-placeholder">
+                </div>
+            </section>
+
+            <section class="card budget" id="budget-card">
+                <div class="card-header">
+                    <h2>Budget</h2>
+                    <span class="icon">💳</span>
+                </div>
+                <div class="card-content">
+                    <div class="exchange-rate-box">
+                        <h4>Exchange Rate</h4>
+                        <p class="rate-display">1 USD = <span id="exchange-rate">--</span> <span id="currency-code">--</span></p>
+                    </div>
+                    <div class="converter">
+                        <label for="amount">Convert USD:</label>
+                        <input type="number" id="amount" value="100" min="1">
+                        <p class="result"> = <span id="conversion-result">--</span></p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 VoyageVantage | WDD 330 Final Project</p>
+        <p><small>Data provided by REST Countries, NewsAPI, and ExchangeRate-API.</small></p>
+    </footer>
+
+    <template id="recent-search-template">
+        <button class="recent-tag"></button>
+    </template>
+
+</body>
+</html>
