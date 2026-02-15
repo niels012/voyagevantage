@@ -54,6 +54,7 @@ async function handleSearch(query) {
             console.warn("Currency API failed:", error);
         }
 
+        
         // 3. Render UI with whatever data we successfully got
         renderDashboard(countryData, newsData, currencyData);
 
@@ -67,6 +68,14 @@ async function handleSearch(query) {
     } finally {
         hideLoading();
     }
+    let newsData = { articles: [] };
+
+        try {
+            // We pass both City and Country to generate better fake headlines
+            newsData = await getNewsData(query, countryName);
+        } catch (error) {
+            console.warn("News completely failed", error);
+        }
 }
 
 // Render Recent Searches from LocalStorage
