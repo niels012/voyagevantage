@@ -61,7 +61,6 @@ export function renderDashboard(countryData, newsData, currencyData) {
     elements.mapContainer.innerHTML = getMapHTML(lat, lng);
  
  // --- 3. Render Budget ---
-    // Check if currencyData exists before trying to read it
     if (currencyData && currencyData.rates) {
         const currencyCode = Object.keys(country.currencies)[0];
         if (currencyData.rates[currencyCode]) {
