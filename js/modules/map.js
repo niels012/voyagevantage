@@ -1,4 +1,3 @@
-// js/modules/map.js
 
 /**
  * Generates an OpenStreetMap Iframe for the given location.
@@ -7,8 +6,6 @@
  * @returns {string} - HTML string for the iframe
  */
 export function getMapHTML(lat, lng) {
-    // We need to create a "Bounding Box" (bbox) for the map view.
-    // This determines how much area is shown around the center point.
     const offset = 0.5; // Larger number = Zoomed Out, Smaller = Zoomed In
     const bbox = [
         lng - offset, // Left (West)

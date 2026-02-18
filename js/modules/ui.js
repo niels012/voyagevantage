@@ -1,4 +1,4 @@
-// js/modules/ui.js
+
 import { getMapHTML } from './map.js';
 
 // Selectors
@@ -82,7 +82,6 @@ export function renderDashboard(countryData, newsData, currencyData) {
     // --- 4. Render News ---
     elements.newsList.innerHTML = '';
     
-    // Check if we actually have articles
     if (newsData && newsData.articles && newsData.articles.length > 0) {
         newsData.articles.forEach(article => {
             const li = document.createElement('li');
@@ -93,7 +92,6 @@ export function renderDashboard(countryData, newsData, currencyData) {
             elements.newsList.appendChild(li);
         });
     } else {
-        // Friendly Fallback Message
         const li = document.createElement('li');
         li.textContent = "News feed unavailable due to API browser restrictions (CORS).";
         li.style.color = "#666";
@@ -102,7 +100,6 @@ export function renderDashboard(countryData, newsData, currencyData) {
     }
 }
 
-// Helper for currency conversion
 export function updateConversion() {
     const amount = parseFloat(elements.convertInput.value);
     if (!isNaN(amount) && currentRate > 0) {
@@ -111,5 +108,5 @@ export function updateConversion() {
     }
 }
 
-// Event listener for live conversion
+
 elements.convertInput.addEventListener('input', updateConversion);
